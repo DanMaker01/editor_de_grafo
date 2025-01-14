@@ -66,9 +66,13 @@ class InteractiveGraph:
             text = font.render(str(node), True, BLACK)
             window.blit(text, (pos[0] + NODE_RADIUS + 5, pos[1] - NODE_RADIUS))
 
-        # Desenha o botão
-        pygame.draw.rect(window, GRAY, (WIDTH - 110, HEIGHT - 60, 100, 40))
+        # Desenha os botões
+        pygame.draw.rect(window, GRAY, (WIDTH - 110, HEIGHT - 110, 100, 40))  # Novo botão
         font = pygame.font.SysFont(None, 24)
+        text = font.render("Verificar", True, BLACK)
+        window.blit(text, (WIDTH - 100, HEIGHT - 100))
+
+        pygame.draw.rect(window, GRAY, (WIDTH - 110, HEIGHT - 60, 100, 40))  # Botão existente
         text = font.render("Reorganizar", True, BLACK)
         window.blit(text, (WIDTH - 100, HEIGHT - 50))
 
@@ -179,7 +183,7 @@ class InteractiveGraph:
 
 
     def get_overlapping_edges(self):
-        """Retorna uma lista de pares de arestas que estão se sobrepondo."""
+        """Retorna uma lista de pares de arestas que estão se sobrepondo."""  
         overlapping_edges = []
         edges = list(self.graph.edges())
         for i, edge1 in enumerate(edges):
@@ -188,7 +192,6 @@ class InteractiveGraph:
                 if self.are_edges_overlapping(edge1, edge2, self.positions):
                     overlapping_edges.append((edge1, edge2))
         return overlapping_edges
-
 
 
 # Instancia o grafo interativo
@@ -215,10 +218,14 @@ def main():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # Botão esquerdo do mouse
                     mouse_pos = event.pos
-                    if WIDTH - 110 <= mouse_pos[0] <= WIDTH - 10 and HEIGHT - 60 <= mouse_pos[1] <= HEIGHT - 20:
+                    if WIDTH - 110 <= mouse_pos[0] <= WIDTH - 10 and HEIGHT - 110 <= mouse_pos[1] <= HEIGHT - 70:
+                        # Verifica sobreposição de nós e arestas
                         print("Overlapping nodes:", interactive_graph.get_overlapping_nodes())
                         print("Overlapping edges:", interactive_graph.get_overlapping_edges())
-                        interactive_graph.reposition_nodes()
+                    elif WIDTH - 110 <= mouse_pos[0] <= WIDTH - 10 and HEIGHT - 60 <= mouse_pos[1] <= HEIGHT - 20:
+                        print("Reorganizando nós...")
+                        for i in range(10):
+                            interactive_graph.reposition_nodes()
                     else:
                         interactive_graph.selected_node = interactive_graph.get_node_at_position(mouse_pos)
 
