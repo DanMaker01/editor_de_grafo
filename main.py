@@ -4,7 +4,17 @@ import random
 from config import *
 from grafointerativo import InteractiveGraph
 
-
+# ----------------------------------------------------------------------
+# TO-DO
+# ----------------------------------------------------------------------
+# - Adicionar o botão de criar nó aonde clicar
+# - Adicionar o botão de remover nó aonde clicar
+# - Melhorar a função de espalhamento
+# - Modularizar mais
+#
+#
+#
+# ----------------------------------------------------------------------
 
 def draw_hud(graph, selected_nodes):
     """Desenha o HUD com informações sobre o grafo e os nós selecionados."""
@@ -122,7 +132,8 @@ def main():
                                 interactive_graph.add_edge(interactive_graph.selected_nodes[0], interactive_graph.selected_nodes[1])
                             else:
                                 print("Selecione dois nos para adicionar uma aresta.")
-                    elif event.button == 3:
+                    elif event.button == 3: # Clique com o botão direito
+                        print("clicou com")
                         pass
 
             elif event.type == pygame.MOUSEBUTTONUP:
