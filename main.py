@@ -182,7 +182,7 @@ class InteractiveGraph:
             else:
                 return 2  # Antihorário
 
-        # Função para verificar se um ponto está no segmento de reta
+        # Função para  se um ponto está no segmento de reta
         def on_segment(px, py, qx, qy, rx, ry):
             return min(px, qx) <= rx <= max(px, qx) and min(py, qy) <= ry <= max(py, qy)
 
@@ -273,7 +273,7 @@ def main():
                         button1_rect = pygame.Rect(WIDTH - 110, HEIGHT - 110, 100, 40)
                         button2_rect = pygame.Rect(WIDTH - 110, HEIGHT - 60, 100, 40)
 
-                        if button1_rect.collidepoint(pygame.mouse.get_pos()): #verificar
+                        if button1_rect.collidepoint(pygame.mouse.get_pos()): #
                             print(pygame.mouse.get_pos(), "clicou no botao1")
                             print("Sobreposicoes nós:", interactive_graph.get_overlapping_nodes())
                             print("Sobreposicoes de arestas:", interactive_graph.get_overlapping_edges())
@@ -281,9 +281,15 @@ def main():
                         if button2_rect.collidepoint(pygame.mouse.get_pos()): #reorganizar
                             print(pygame.mouse.get_pos(), "clicou no botao2")
                             
-
                             interactive_graph.reset_all_node_position()
-
+                            ite = 0
+                            while len(interactive_graph.get_overlapping_edges()) > 0:
+                                interactive_graph.reset_all_node_position()
+                                ite+=1
+                                if ite > 1000:
+                                    break
+                            
+                            #espalhar os nós que se sobrepõem
                             for i in range(10):
                                 interactive_graph.reposition_nodes()
                             print("Nos reorganizados.")
